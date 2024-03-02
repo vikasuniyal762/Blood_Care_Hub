@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1067487907753",
+    "project_id": "bloodcarehub",
+    "storage_bucket": "bloodcarehub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067487907753:android:55df106d67d7bd7f407eb8",
+        "android_client_info": {
+          "package_name": "com.bloodcarehub.blood_care_hub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCngf1dcBLH1JYVejrfASJ9O9rgxHmHLbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
