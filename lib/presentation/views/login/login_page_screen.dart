@@ -34,10 +34,14 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
     return user;
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    bool obscureText = true;
+
     return WillPopScope(
       onWillPop: () => _onBackPressed(context),
       child: Padding(
@@ -85,6 +89,17 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
                 ),
                 labelText: 'Password',
                 prefixIcon: Icon(Icons.lock, color: AppColor.accentPurple),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    obscureText? Icons.visibility : Icons.visibility_off,
+                    color: AppColor.accentPurple,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      obscureText = !obscureText;
+                    });
+                  }, )
+
               ),
             ),
             SizedBox(height: 12.0),
@@ -113,21 +128,30 @@ class _LoginPageScreenState extends State<LoginPageScreen> {
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                 ),
                 onPressed: () async {
-                  // showToast("Login SuccessFull", ToastGravity.CENTER);
+                  String email = emailController.text;
+                  String password = passwordController.text;
 
-                  User? user = await loginUsingEmailPassword(
-                      email: emailController.text,
-                      password: passwordController.text,
-                      context: context);
-                  print(user);
-                  if (user != null) {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ProfileScreen()));
+                  if (email.isEmpty || password.isEmpty) {
+                    showToast("Email or password cannot be empty", ToastGravity.CENTER);
+                    return;
                   }
 
-                  // Add your login functionality here
+                  User? user = await loginUsingEmailPassword(
+                    email: email,
+                    password: password,
+                    context: context,
+                  );
+
+                  if (user != null) {
+                    showToast("Login Successful", ToastGravity.CENTER);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfileScreen()),
+                    );
+                  } else {
+                    // Only show the "Wrong email or password" message if both email and password are non-empty
+                    showToast("Wrong email or password", ToastGravity.CENTER);
+                  }
                 },
                 child: Text(
                   "Login",
